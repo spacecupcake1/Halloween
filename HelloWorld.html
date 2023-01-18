@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>To-Do-Liste</title>
+</head>
+<style>
+    ul li.angeklickt {
+    text-decoration: line-through;
+    }
+</style>
+<body>
+    <script>
+            alert( 'Hello, world!')
+            function hinzufuegen() {
+                var eintrag = document.createElement("li");
+                var textNode = document.createTextNode(document.getElementById("eingabe").value);
+                eintrag.appendChild(textNode);
+                document.getElementById("aufgabenListe").appendChild(eintrag);
+                document.getElementById("eingabe").value = "";
+
+                var liste = document.getElementById('aufgabenListe')
+                liste.addEventListener('click', function(event){
+                    event.target.classList.toggle('angeklickt');
+                });
+            }
+        
+    </script>
+
+    <h2>To-Do-Liste</h2>
+    <input type="text" id="eingabe" placeholder="Aufgabe einfügen...">
+    <button onclick="hinzufuegen()">Hinzufügen</button>
+    <ul id="aufgabenListe"></ul>
+
+    <ul id="aufgabenListe">
+        <li>HTML Lernen</li>
+        <li>CSS Lernen</li>
+        <li>Javascript Lernen</li>
+    </ul>
+
+
+</body>
+</html>
+
+
+var reglerStatus = 0;   //Gibt den Zustand des Reglers an
+const regler = document.getElementById("regler");
+const brenner = document.getElementById("brenner");
+const brennerFlip = document.getElementById("brennerFlip");
+//Wird beim Bewegen des Mausrads ausgelöst
+document.getElementById("regler").addEventListener("mousewheel", function(event) {
+    //wheelDelta: gibt an, wie weit und in welche Richtung gescrollt wurde. <0 = nach unten gescrollt
+    if(event.wheelDelta < 0 && reglerStatus != 0) {
+        reglerStatus--;
+        switch (reglerStatus) {
+            case 0:
+                regler.src = "images/regler/regler0.png";
+                brenner.src = "images/brenner_staender/brenner0.png";
+                brennerFlip.src = "images/brenner_staender/brenner0.png";
+                addHistory("Brenner ausgeschaltet");
+                break;
+            case 1:
+                regler.src = "images/regler/regler1.png";
+                brenner.src = "images/brenner_staender/brenner1.png";
+                brennerFlip.src = "images/brenner_staender/brenner1flip.png";
+                addHistory("Brenner auf Stufe 1 geschaltet");
+                break;
+            case 2:
+                regler.src = "images/regler/regler2.png";
+                brenner.src = "images/brenner_staender/brenner2.png";
+                brennerFlip.src = "images/brenner_staender/brenner2flip.png";
+                addHistory("Brenner auf Stufe 2 geschaltet");
+                break;
+        }
+
+    //>=0 = nach oben gescrollt
+    } else if(event.wheelDelta >= 0 && reglerStatus != 3) {
+        reglerStatus++;
+        switch (reglerStatus) {
+            case 1:
+                regler.src = "images/regler/regler1.png";
+                brenner.src = "images/brenner_staender/brenner1.png";
+                brennerFlip.src = "images/brenner_staender/brenner1flip.png";
+                addHistory("Brenner auf Stufe 1 geschaltet");
+                break;
+            case 2:
+                regler.src = "images/regler/regler2.png";
+                brenner.src = "images/brenner_staender/brenner2.png";
+                brennerFlip.src = "images/brenner_staender/brenner2flip.png";
+                addHistory("Brenner auf Stufe 2 geschaltet");
+                break;
+            case 3:
+                regler.src = "images/regler/regler3.png";
+                brenner.src = "images/brenner_staender/brenner3.png";
+                brennerFlip.src = "images/brenner_staender/brenner3flip.png";
+                addHistory("Brenner auf Stufe 3 geschaltet");
+                break;
+        }
+    }
+});
